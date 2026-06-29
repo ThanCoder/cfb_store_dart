@@ -1,35 +1,21 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cfb_store/src/core/base.dart';
-import 'package:cfb_store/src/core/utils/byte_reader.dart';
-import 'package:cfb_store/src/core/utils/bytes_builder_helper.dart';
-import 'package:cfb_store/src/core/utils/cf_data_model_base.dart';
+import 'package:cfb_store/src/core/binary_writer.dart';
+import 'package:cfb_store/src/core/binary_reader.dart';
+import 'package:cfb_store/src/interfaces/icfb_store.dart'; // BinaryReader ကိုလည်း သုံးရပါမယ်
 
-part 'core/logic/store_getter_helper.dart';
-part 'core/logic/store_data_rw_helper.dart';
-part 'core/logic/store_setter_helper.dart';
+part 'mixin_logics/file_rw_handler.dart';
+part 'mixin_logics/value_handler.dart';
 
-class CFBStoreBase
-    with StoreGetterHelper, StoreDataRwHelper, StoreSetterHelper {
-  // Cache Memory
+class CFBStoreBase extends ICFBStore with ValueHandler, FileRWHandler {
+  // RAM ပေါ်မှာ သီးသန့်စီ Bytes Block တွေအနေနဲ့ သိမ်းဆည်းခြင်း
+  final Map<String, Uint8List> _map = {};
+  late String _path;
   @override
-  final Map<String, Uint8List> _cacheMap = {};
-  @override
-  final Map<Type, CFCutomBaseAdapter<CFCustomBaseType>> _adapterCache = {};
-  late File _dbFile;
-  // store writter
-  @override
-  File get dbFile => _dbFile;
+  String get path => _path;
 
-  /// ### Register Custom Type
-  void register<T extends CFCustomBaseType>(CFCutomBaseAdapter<T> adapter) {
-    _adapterCache[T] = adapter;
-  }
-
-  /// ### Init Store
-  Future<void> openStore(String dbPath) async {
-    _dbFile = File(dbPath);
-    await _readDisk();
-  }
+  @override
+  Map<String, Uint8List> get cacheMap => _map;
 }
