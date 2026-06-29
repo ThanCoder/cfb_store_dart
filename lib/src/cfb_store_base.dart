@@ -20,7 +20,7 @@ class CFBStoreBase extends ICFBStore with ValueHandler, FileRWHandler {
 
   @override
   final Map<String, Uint8List> _cacheMap = {};
-
+  Map<String, Uint8List> get cacheMap => _cacheMap;
   late File _dbFile;
 
   @override

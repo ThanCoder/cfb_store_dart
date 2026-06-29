@@ -16,9 +16,8 @@ class BlockReader {
       _payload.offsetInBytes,
       _payload.lengthInBytes,
     );
-    _decodeAll();
   }
-  void _decodeAll() {
+  void decodeAll() {
     // တစ်ဖိုင်လုံးမှာရှိသမျှ key-value structure အားလုံးကို loop ပတ်ဖတ်ပြီး _map ထဲ စုမယ်
     while (_offset < _payload.length) {
       final key = _readKey(); // Key ကို အရင်ဖတ်မယ်
