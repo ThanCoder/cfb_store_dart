@@ -3,17 +3,28 @@ import 'dart:typed_data';
 
 import 'package:cfb_store/src/core/types.dart'; // CFDataType အတွက် လိုအပ်ပါက import ထားပါ
 
-class BinaryReader {
+class BlockReader {
   final Uint8List _payload;
   late final ByteData _byteData;
   int _offset = 0;
+  final Map<String, dynamic> _map = {};
+  Map<String, dynamic> get data => _map;
 
-  BinaryReader({required this._payload}) {
+  BlockReader({required this._payload}) {
     _byteData = ByteData.view(
       _payload.buffer,
       _payload.offsetInBytes,
       _payload.lengthInBytes,
     );
+    _decodeAll();
+  }
+  void _decodeAll() {
+    // တစ်ဖိုင်လုံးမှာရှိသမျှ key-value structure အားလုံးကို loop ပတ်ဖတ်ပြီး _map ထဲ စုမယ်
+    while (_offset < _payload.length) {
+      final key = _readKey(); // Key ကို အရင်ဖတ်မယ်
+      final value = _readElement(); // Value (Type + Data) ကို ဆက်ဖတ်မယ်
+      _map[key] = value;
+    }
   }
 
   // အပြင်ကနေ တိုက်ရိုက် လှမ်းခေါ်ပြီး value ထုတ်မယ့် Entry Point

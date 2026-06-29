@@ -4,10 +4,10 @@ import 'dart:typed_data';
 
 import 'package:cfb_store/src/core/types.dart';
 
-class BinaryWriter {
+class BlockWriter {
   final _builder = BytesBuilder();
 
-  BinaryWriter();
+  BlockWriter();
 
   Uint8List get toBytes => _builder.toBytes();
 

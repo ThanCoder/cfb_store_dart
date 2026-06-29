@@ -1,21 +1,28 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cfb_store/src/core/binary_writer.dart';
-import 'package:cfb_store/src/core/binary_reader.dart';
-import 'package:cfb_store/src/interfaces/icfb_store.dart'; // BinaryReader ကိုလည်း သုံးရပါမယ်
+import 'package:cfb_store/src/core/block_writer.dart';
+import 'package:cfb_store/src/core/block_reader.dart';
+import 'package:cfb_store/src/core/storage_rw.dart';
 
 part 'mixin_logics/file_rw_handler.dart';
 part 'mixin_logics/value_handler.dart';
+part 'interfaces/icfb_store.dart';
 
 class CFBStoreBase extends ICFBStore with ValueHandler, FileRWHandler {
-  // RAM ပေါ်မှာ သီးသန့်စီ Bytes Block တွေအနေနဲ့ သိမ်းဆည်းခြင်း
-  final Map<String, Uint8List> _map = {};
-  late String _path;
-  @override
-  String get path => _path;
+  static CFBStoreBase? _instance;
+
+  /// ### Singleton
+  static CFBStoreBase get getInstance {
+    _instance ??= CFBStoreBase();
+    return _instance!;
+  }
 
   @override
-  Map<String, Uint8List> get cacheMap => _map;
+  final Map<String, Uint8List> _cacheMap = {};
+
+  late File _dbFile;
+
+  @override
+  File get dbFile => _dbFile;
 }
