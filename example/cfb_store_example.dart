@@ -3,7 +3,7 @@
 import 'package:cfb_store/cfb_store.dart';
 
 void main() async {
-  final store = CFBStoreBase();
+  final store = CFBStore();
   await store.open('config.cfb');
 
   store.put('name', 'ThanCoder');

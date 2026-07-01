@@ -9,12 +9,12 @@ part 'mixin_logics/file_rw_handler.dart';
 part 'mixin_logics/value_handler.dart';
 part 'interfaces/icfb_store.dart';
 
-class CFBStoreBase extends ICFBStore with ValueHandler, FileRWHandler {
-  static CFBStoreBase? _instance;
+class CFBStore extends ICFBStore with ValueHandler, FileRWHandler {
+  static CFBStore? _instance;
 
   /// ### Singleton
-  static CFBStoreBase get getInstance {
-    _instance ??= CFBStoreBase();
+  static CFBStore get getInstance {
+    _instance ??= CFBStore();
     return _instance!;
   }
 

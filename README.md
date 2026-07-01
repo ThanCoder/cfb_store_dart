@@ -4,7 +4,7 @@
 
 ### Example
 ```dart
-final store = CFBStoreBase();
+final store = CFBStore();
 await store.open('config.cfb');
 
 store.put('name', 'ThanCoder');
