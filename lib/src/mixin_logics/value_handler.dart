@@ -76,6 +76,15 @@ mixin ValueHandler on ICFBStore {
     return def ?? 0.0;
   }
 
+  /// # Map Type
+  Map<String, dynamic> getMap(String key, [Map<String, dynamic>? def]) {
+    final val = get(key);
+    if (val is Map) {
+      return Map<String, dynamic>.from(val);
+    }
+    return def ?? {};
+  }
+
   @override
   void put(String key, dynamic value) {
     final writer = BlockWriter();

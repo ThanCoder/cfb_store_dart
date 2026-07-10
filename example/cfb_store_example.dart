@@ -14,8 +14,10 @@ void main() async {
   store.put('map-list', [
     {'name': 'thancoder', 'age': 29},
   ]);
+  store.put('map', {'name': 'thancoder', 'age': 28, 'height': 5.6});
 
   //save disk
   // await store.writeAll();
   print('list: ${store.getMapList('map-list')}');
+  print('map: ${store.getMap('map')}');
 }

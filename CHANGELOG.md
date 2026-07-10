@@ -1,3 +1,6 @@
+# 0.3.0
+- Added `getMap`
+
 # 0.2.0
 
 - Added `openSync(dbPath)`
