@@ -6,7 +6,7 @@ mixin ValueHandler on ICFBStore {
     String key, [
     List<Map<String, dynamic>>? def,
   ]) {
-    final List<dynamic> val = getList(key);
+    final List<dynamic> val = getList<Map<String, dynamic>>(key);
     return val.map((e) {
       if (e is Map) {
         return Map<String, dynamic>.from(e);
@@ -15,12 +15,23 @@ mixin ValueHandler on ICFBStore {
     }).toList();
   }
 
+  /// ### `List<String>` Type
+  List<String> getStringList(String key, [List<String>? def]) {
+    final list = getList<String>(key);
+    if (list.isEmpty && def != null) return def;
+    return list;
+  }
+
   /// ### `List<dynamic>` Type
-  List<dynamic> getList(String key, [List<dynamic>? def]) {
+  List<T> getList<T>(String key, [List<T>? def]) {
     final val = get(key);
     if (val == null) return def ?? [];
     if (val is List) {
-      return List.from(val);
+      try {
+        return List<T>.from(val);
+      } catch (e) {
+        return def ?? [];
+      }
     }
     return def ?? [];
   }

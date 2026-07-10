@@ -16,7 +16,9 @@ abstract class ICFBStore {
 
   /// ### Need To Call
   Future<bool> open(String dbPath);
+  bool openSync(String dbPath);
 
   /// ### Write Disk
   Future<bool> writeAll();
+  bool writeAllSync();
 }

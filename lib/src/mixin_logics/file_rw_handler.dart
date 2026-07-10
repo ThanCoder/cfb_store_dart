@@ -10,6 +10,12 @@ mixin FileRWHandler on ICFBStore {
   }
 
   @override
+  bool openSync(String dbPath) {
+    _dbFile = File(dbPath);
+    return _loadAllSync();
+  }
+
+  @override
   Future<bool> writeAll() async {
     try {
       final writer = StorageWriter();
@@ -22,11 +28,38 @@ mixin FileRWHandler on ICFBStore {
     }
   }
 
+  @override
+  bool writeAllSync() {
+    try {
+      final writer = StorageWriter();
+      writer.writeCacheMap(_cacheMap);
+      dbFile.writeAsBytesSync(writer.toBytes);
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> _loadAll() async {
     try {
       _cacheMap.clear();
       if (!dbFile.existsSync()) return false;
       final bytes = await dbFile.readAsBytes();
+      final reader = StorageReader(payload: bytes);
+      _cacheMap.addAll(reader.readToCacheMap());
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool _loadAllSync() {
+    try {
+      _cacheMap.clear();
+      if (!dbFile.existsSync()) return false;
+      final bytes = dbFile.readAsBytesSync();
       final reader = StorageReader(payload: bytes);
       _cacheMap.addAll(reader.readToCacheMap());
 
