@@ -86,13 +86,15 @@ mixin ValueHandler on ICFBStore {
   }
 
   @override
-  void put(String key, dynamic value) {
+  ICFBStore put(String key, dynamic value) {
     final writer = BlockWriter();
     // Key မပါဘူး၊ value ရဲ့ payload ပဲထုတ်မယ်
     writer.writeValue(value);
 
     // Memory ပေါ်မှာ map key နဲ့ bytes ကို သိမ်းလိုက်ပြီ
     _cacheMap[key] = writer.toBytes;
+    _addEvent(PutValue(key));
+    return this;
   }
 
   @override

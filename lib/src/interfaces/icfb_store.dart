@@ -9,7 +9,7 @@ abstract class ICFBStore {
   /// ### Need To Call `writeAll` Method
   ///
   /// Make Sure Write Disk
-  void put(String key, dynamic value);
+  ICFBStore put(String key, dynamic value);
 
   /// Memory ထဲက Bytes ကိုဖတ်ပြီး မူလ Data Type (List/Map/String/etc.) အတိုင်း ပြန်ထုတ်ပေးမယ်
   dynamic get(String key);
@@ -21,4 +21,8 @@ abstract class ICFBStore {
   /// ### Write Disk
   Future<bool> writeAll();
   bool writeAllSync();
+
+  // events
+  void _addEvent(StoreEvent event);
+  void close();
 }

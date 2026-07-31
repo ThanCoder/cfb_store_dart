@@ -21,9 +21,10 @@ mixin FileRWHandler on ICFBStore {
       final writer = StorageWriter();
       writer.writeCacheMap(_cacheMap);
       await dbFile.writeAsBytes(writer.toBytes);
-
+      _addEvent(ValueSaved());
       return true;
     } catch (e) {
+      _addEvent(ValueSaveError(e.toString()));
       return false;
     }
   }
@@ -34,9 +35,10 @@ mixin FileRWHandler on ICFBStore {
       final writer = StorageWriter();
       writer.writeCacheMap(_cacheMap);
       dbFile.writeAsBytesSync(writer.toBytes);
-
+      _addEvent(ValueSaved());
       return true;
     } catch (e) {
+      _addEvent(ValueSaveError(e.toString()));
       return false;
     }
   }
@@ -48,9 +50,10 @@ mixin FileRWHandler on ICFBStore {
       final bytes = await dbFile.readAsBytes();
       final reader = StorageReader(payload: bytes);
       _cacheMap.addAll(reader.readToCacheMap());
-
+      _addEvent(ValueLoaded());
       return true;
     } catch (e) {
+      _addEvent(ValueLoadError(e.toString()));
       return false;
     }
   }
@@ -62,9 +65,10 @@ mixin FileRWHandler on ICFBStore {
       final bytes = dbFile.readAsBytesSync();
       final reader = StorageReader(payload: bytes);
       _cacheMap.addAll(reader.readToCacheMap());
-
+      _addEvent(ValueLoaded());
       return true;
     } catch (e) {
+      _addEvent(ValueLoadError(e.toString()));
       return false;
     }
   }

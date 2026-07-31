@@ -1,6 +1,6 @@
 name: cfb_store
-description: CFB Store -> Config Binary Database.Witten By Dart.
-version: 0.3.0
+description: A lightweight and flexible key-value storage package for Dart applications. CFB Store provides simple data persistence with support for primitive values, lists, maps, and custom event notifications for store operations.
+version: 0.4.0
 repository: https://github.com/ThanCoder/cfb_store_dart.git
 
 environment:
