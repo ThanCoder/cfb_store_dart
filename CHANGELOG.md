@@ -1,3 +1,7 @@
+# 0.5.1
+
++ Forgot `Exported Events Class`
+
 # 0.4.0
 
 + Added `StoreEvent` -> `PutValue`,`ValueLoaded`,`ValueSaved`,`ValueLoadError`,`ValueSaveError`

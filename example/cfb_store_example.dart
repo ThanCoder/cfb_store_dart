@@ -5,6 +5,9 @@ import 'package:cfb_store/cfb_store.dart';
 void main() async {
   final store = CFBStore();
 
+  // store.events
+  store.close();
+
   await store.open('config.cfb');
   // store.openSync(dbPath)
 
